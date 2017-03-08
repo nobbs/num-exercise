@@ -1,0 +1,39 @@
+\documentclass{num_exercise}
+
+% required for localization (ngerman prefered for german loc.)
+\usepackage[english]{babel}
+
+% only required for this example
+\usepackage{blindtext}
+
+% some metadata, most of it is optional
+\lecture{Example Lecture Title}
+\lecturer{Prof. Dr. Example Lecturer $\cdot$  M. Sc. Teaching Assistant}
+\term{Summer semester 2017}
+\sheettitle{Exercise Sheet 1.}
+\sheetdate{\today}
+\university{Institute of Mathematics, Example University, 12345 Example Town}
+\website{https://github.com/nobbs/num-exercise}
+\lastline{Some last information can go here, e.g. where to drop off the exercises.}
+
+\begin{document}
+  \blindtext
+
+  % see the exsheets documentation for more information on how to use these
+  % environment and the other features
+  \begin{question}[subtitle=Some not so easy tasks]{10+2}
+    \blindtext[3]
+  \end{question}
+
+  \begin{solution}[print]
+    \blindtext[2]
+  \end{solution}  
+
+  \begin{question}{3}
+    \blindtext[1]
+  \end{question}  
+
+  \begin{question}[subtitle=A bonus task]{+2}
+    \blindtext
+  \end{question}
+\end{document}
