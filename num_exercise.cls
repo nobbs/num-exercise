@@ -5,7 +5,7 @@
 \LoadClass[
   11pt,
   a4paper,
-  twoside=semi,
+  oneside,
   cleardoublepage=plain,
   parskip
 ]{scrartcl}
@@ -190,7 +190,7 @@
   }
 }
 
-\newcommand{\additionaldoublepage}{\newpage$\;$\cleardoublepage}
+\newcommand{\additionaldoublepage}{\newpage$\;$\clearpage}
 
 %% Math operators and other related stuff
 % absolute value, norm, ceil, floor
