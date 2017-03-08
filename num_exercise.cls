@@ -1,11 +1,12 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{num_exercise}[2017/03/07 initial version]
+\ProvidesClass{num_exercise}[2017/03/07 Exercise Sheet with JGU styling]
 
 % Load scrartcl class as base document class
 \LoadClass[
   11pt,
   a4paper,
-  oneside,
+  twoside=semi,
+  cleardoublepage=plain,
   parskip
 ]{scrartcl}
 
@@ -15,6 +16,15 @@
 \RequirePackage{lmodern}
 \RequirePackage{etoolbox}
 
+% exam toggle
+\newtoggle{exam}
+\togglefalse{exam}
+
+% Declare options
+\DeclareOption{exam}{\toggletrue{exam}}
+\ProcessOptions\relax
+
+% load even more packages
 % typography
 \RequirePackage{microtype}
 
@@ -26,8 +36,12 @@
 \RequirePackage{graphicx}
 
 % auxilliary stuff
+\RequirePackage{multirow}
+\RequirePackage{booktabs}
+\RequirePackage{lastpage} 
 \RequirePackage[hidelinks]{hyperref}
 \RequirePackage{enumitem}
+% change itemize / enumerate spacing
 \setlist[1]{
   itemsep=1pt,
   topsep=-1ex,
@@ -41,12 +55,15 @@
   partopsep=1ex,
   parsep=1ex,
 }
-
 % change enumerate labels
-\renewcommand{\labelenumi}{\alph{enumi})}
-\renewcommand{\labelenumii}{\itshape\roman{enumii}.}
+\setlist[enumerate,1]{
+  label=\alph*)
+}
+\setlist[enumerate,2]{
+  label=\itshape\roman*.
+}
 
-% exercise related stuff
+% exsheets related stuff
 \RequirePackage{exsheets}
 \DeclareInstance{exsheets-heading}{block-wp-2}{default}{
   join = {
@@ -66,6 +83,13 @@
 }
 % use Aufgabe instead of Übung for the german translation
 \DeclareTranslation{german}{exsheets-exercise-name}{Aufgabe}
+% exam related stuff
+\iftoggle{exam}{
+  \SetupExSheets{
+    question/type=exam,
+    question/pre-hook = \cleardoublepage
+  }
+}{}
 
 % JGU colors
 \definecolor{jgu_red}{RGB}{193,0,42}
@@ -91,8 +115,10 @@
 \newcommand{\lastline}[1]{\renewcommand{\@lastline}{#1}}
 
 % set page layout
-\pagestyle{empty}
 \areaset{16cm}{25.5cm}
+\iftoggle{exam}{}{
+  \pagestyle{empty}
+}
 
 % page head and foot
 \AtBeginDocument{%
@@ -128,37 +154,43 @@
   \end{picture}
   \par\vspace{-1em}
 }
-\AtEndDocument{%
-  \setlength{\unitlength}{1cm}
-  \vspace{\fill}%
-  \begin{center}
-    \bfseries
-    \@lastline%
-  \end{center}
-  \vspace{-1cm}%
-  \begin{picture}(15.5,2)
-    \put(-1,0){
-      \color{jgu_lightgray}\rule{17cm}{1pt}
-    }
-    \put(-0.15,-1){
-      \color{jgu_lightgray}\rule{1pt}{2cm}
-    }
-    \put(0.2,0.34){
-      \begin{minipage}[b]{15cm}
-        \sffamily\color{jgu_darkgray}
-        \@lecturer
-      \end{minipage}
-    }
-    \put(0.2,-1){
-      \begin{minipage}[b]{15.2cm}
-        \color{jgu_darkgray}
-          {\sffamily\fontseries{sbc}\selectfont\@university}
-          \newline
-          {\ttfamily\fontseries{m}\selectfont\url{\@website}}
-      \end{minipage}
-    }
-  \end{picture}
+
+% only add the footer if it's not an exam
+\iftoggle{exam}{}{
+  \AtEndDocument{%
+    \setlength{\unitlength}{1cm}
+    \vspace{\fill}%
+    \begin{center}
+      \bfseries
+      \@lastline%
+    \end{center}
+    \vspace{-1cm}%
+    \begin{picture}(15.5,2)
+      \put(-1,0){
+        \color{jgu_lightgray}\rule{17cm}{1pt}
+      }
+      \put(-0.15,-1){
+        \color{jgu_lightgray}\rule{1pt}{2cm}
+      }
+      \put(0.2,0.34){
+        \begin{minipage}[b]{15cm}
+          \sffamily\color{jgu_darkgray}
+          \@lecturer
+        \end{minipage}
+      }
+      \put(0.2,-1){
+        \begin{minipage}[b]{15.2cm}
+          \color{jgu_darkgray}
+            {\sffamily\fontseries{sbc}\selectfont\@university}
+            \newline
+            {\ttfamily\fontseries{m}\selectfont\url{\@website}}
+        \end{minipage}
+      }
+    \end{picture}
+  }
 }
+
+\newcommand{\additionaldoublepage}{\newpage$\;$\cleardoublepage}
 
 %% Math operators and other related stuff
 % absolute value, norm, ceil, floor
