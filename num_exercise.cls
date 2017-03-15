@@ -36,9 +36,12 @@
 \RequirePackage{graphicx}
 
 % auxilliary stuff
+\iftoggle{exam}{
+  \RequirePackage{lastpage}
+}{}
+ 
 \RequirePackage{multirow}
 \RequirePackage{booktabs}
-\RequirePackage{lastpage} 
 \RequirePackage[hidelinks]{hyperref}
 \RequirePackage{enumitem}
 % change itemize / enumerate spacing
