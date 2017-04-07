@@ -63,7 +63,7 @@
   label=\alph*)
 }
 \setlist[enumerate,2]{
-  label=\itshape\roman*.
+  label={\itshape\roman*}\,)
 }
 
 % exsheets related stuff
@@ -226,3 +226,6 @@
 \newcommand\placeholder{{\mkern2mu\cdot\mkern2mu}}
 \newcommand\infsup[2]{\adjustlimits\inf_{#1}\sup_{#2}}
 \newcommand\supsup[2]{\adjustlimits\sup_{#1}\sup_{#2}}
+
+% inner products
+\newcommand{\ip}[2]{\left\langle#1,#2\right\rangle}
