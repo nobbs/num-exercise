@@ -20,8 +20,13 @@
 \newtoggle{exam}
 \togglefalse{exam}
 
+% show points toggle
+\newtoggle{showpoints}
+\togglefalse{showpoints}
+
 % Declare options
 \DeclareOption{exam}{\toggletrue{exam}}
+\DeclareOption{showpoints}{\toggletrue{showpoints}}
 \ProcessOptions\relax
 
 % load even more packages
@@ -31,9 +36,13 @@
 % math and graphics
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
+\RequirePackage{stmaryrd}
 \RequirePackage{mathtools}
-\RequirePackage[dvinames]{xcolor}
+\RequirePackage[dvipsnames]{xcolor}
 \RequirePackage{graphicx}
+
+% only use equation numbers for referenced eqs.
+%\RequirePackage{autonum}
 
 % auxilliary stuff
 \iftoggle{exam}{
@@ -42,7 +51,27 @@
  
 \RequirePackage{multirow}
 \RequirePackage{booktabs}
-\RequirePackage[hidelinks]{hyperref}
+%\RequirePackage[hidelinks]{hyperref}
+
+\RequirePackage{multicol}
+\RequirePackage{marginnote}
+
+\definecolor{jgu_red}{RGB}{193,0,42}
+
+
+\RequirePackage{hyperref}
+\newcommand\myshade{100}
+\colorlet{mylinkcolor}{Maroon}
+\colorlet{mycitecolor}{Aquamarine}
+\colorlet{myurlcolor}{violet}
+
+\hypersetup{
+  linkcolor  = mylinkcolor!\myshade!black,
+  citecolor  = mycitecolor!\myshade!black,
+  urlcolor   = jgu_red!\myshade!black,
+  colorlinks = true,
+}
+
 \RequirePackage{enumitem}
 % change itemize / enumerate spacing
 \setlist[1]{
@@ -163,6 +192,9 @@
   \AtEndDocument{%
     \setlength{\unitlength}{1cm}
     \vspace{\fill}%
+    \iftoggle{showpoints}{
+      \hfill \emph{gesamt \totalpoints}
+    }{}
     \begin{center}
       \bfseries
       \@lastline%
@@ -186,7 +218,7 @@
           \color{jgu_darkgray}
             {\sffamily\fontseries{sbc}\selectfont\@university}
             \newline
-            {\ttfamily\fontseries{m}\selectfont\url{\@website}}
+            {\ttfamily\fontseries{m}\selectfont\href{\@website}{\color{jgu_darkgray}\@website}}
         \end{minipage}
       }
     \end{picture}
@@ -199,6 +231,7 @@
 % absolute value, norm, ceil, floor
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\normiii}{\lVert}{\rVert}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 
@@ -215,11 +248,17 @@
 \renewcommand{\vec}[1]{\mathbf{#1}}
 \newcommand{\mat}[1]{\mathbf{#1}}
 
+% transposed symbol
+\newcommand*{\tran}{^{\mkern-1.5mu\mathsf{T}}}
+
 % "correct" differential d in integral
 \newcommand*\dd{\mathop{}\!\mathrm{d}}
 \newcommand*\Dd[1]{\mathop{}\!\mathrm{d^#1}}
 
 % some more operators
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\spur}{Spur}
+
 \DeclareMathOperator*{\esssup}{ess\,sup}
 \DeclareMathOperator*{\argsup}{arg\,sup}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -229,3 +268,12 @@
 
 % inner products
 \newcommand{\ip}[2]{\left\langle#1,#2\right\rangle}
+
+% margin points for subquestions
+\newcommand\marginpoints[1]{\marginnote{\scriptsize(\points{#1})}}
+
+
+% clever references
+\usepackage[german,noabbrev,nameinlink,capitalise]{cleveref}
+\crefname{equation}{}{}
+\usepackage{autonum}
