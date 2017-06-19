@@ -250,6 +250,7 @@
 
 % transposed symbol
 \newcommand*{\tran}{^{\mkern-1.5mu\mathsf{T}}}
+\newcommand*{\invtran}{^{-\mkern-1.5mu\mathsf{T}}}
 
 % "correct" differential d in integral
 \newcommand*\dd{\mathop{}\!\mathrm{d}}
