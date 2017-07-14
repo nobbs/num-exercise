@@ -259,6 +259,7 @@
 % some more operators
 \DeclareMathOperator{\trace}{tr}
 \DeclareMathOperator{\spur}{Spur}
+\DeclareMathOperator{\spn}{span}
 
 \DeclareMathOperator*{\esssup}{ess\,sup}
 \DeclareMathOperator*{\argsup}{arg\,sup}
