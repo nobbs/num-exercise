@@ -24,8 +24,13 @@
 \newtoggle{showpoints}
 \togglefalse{showpoints}
 
+% monochrome toggle
+\newtoggle{monochrome}
+\togglefalse{monochrome}
+
 % Declare options
 \DeclareOption{exam}{\toggletrue{exam}}
+\DeclareOption{monochrome}{\toggletrue{monochrome}}
 \DeclareOption{showpoints}{\toggletrue{showpoints}}
 \ProcessOptions\relax
 
@@ -38,7 +43,13 @@
 \RequirePackage{amssymb}
 \RequirePackage{stmaryrd}
 \RequirePackage{mathtools}
-\RequirePackage[dvipsnames]{xcolor}
+
+\iftoggle{monochrome}{
+  \RequirePackage[dvipsnames,monochrome]{xcolor}
+}{
+  \RequirePackage[dvipsnames]{xcolor}
+}
+
 \RequirePackage{graphicx}
 
 % only use equation numbers for referenced eqs.
